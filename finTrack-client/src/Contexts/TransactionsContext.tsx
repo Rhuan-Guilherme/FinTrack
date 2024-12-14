@@ -13,6 +13,7 @@ interface TransactionsContextType {
   transactions: Transaction[];
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const TransactionsContext = createContext({} as TransactionsContextType);
 
 interface TransactionsProviderProps {
