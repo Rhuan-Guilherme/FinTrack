@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  :focus{
+  :focus-visible{
     outline: none;
     box-shadow: 0 0 0 2px ${(props) => props.theme['purple-300']};
   }
