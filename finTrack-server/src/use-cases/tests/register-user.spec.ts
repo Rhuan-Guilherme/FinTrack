@@ -1,6 +1,8 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { RegisterUser } from '../register-user';
 import { InMomoryUserRepository } from '@/repositories/im-momory/in-memory-user-repository';
+import { UserAlreadyExistsError } from '../errors/user-already-exists-error';
+import { compare } from 'bcryptjs';
 
 let userRepository: InMomoryUserRepository;
 let sup: RegisterUser;
@@ -11,13 +13,41 @@ describe('Teste para a criação de novos usuários.', () => {
     sup = new RegisterUser(userRepository);
   });
 
-  test('Deve ser possível criar um novo usuário', async () => {
+  test('Deve ser possível criar um novo usuário.', async () => {
     const { user } = await sup.execute({
-      email: 'Teste',
-      name: 'teste@teste.com',
+      name: 'Teste',
+      email: 'teste@teste.com',
       password: 'teste123',
     });
 
     expect(user.id).toEqual(expect.any(String));
+    expect(user.email).toEqual('teste@teste.com');
+  });
+
+  test('Não deve ser possível criar um novo usário com um email duplicado.', async () => {
+    await sup.execute({
+      name: 'Teste',
+      email: 'teste@teste.com',
+      password: 'teste123',
+    });
+
+    expect(() =>
+      sup.execute({
+        name: 'Teste',
+        email: 'teste@teste.com',
+        password: 'teste123',
+      })
+    ).rejects.toBeInstanceOf(UserAlreadyExistsError);
+  });
+  test('Deve ser possível que a senha do usuário seja criptografada.', async () => {
+    const { user } = await sup.execute({
+      name: 'Teste',
+      email: 'teste@teste.com',
+      password: 'teste123',
+    });
+
+    const passwordIsHashed = await compare('teste123', user.password_hash);
+
+    expect(passwordIsHashed).toEqual(true);
   });
 });
