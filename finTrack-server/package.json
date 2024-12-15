@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch ./src/app.ts"
+    "dev": "tsx watch ./src/app.ts",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +15,9 @@
     "prisma": "^6.0.1",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "vitest-tsconfig-paths": "^3.4.1"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",
