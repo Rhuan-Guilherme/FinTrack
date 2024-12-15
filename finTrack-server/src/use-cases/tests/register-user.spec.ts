@@ -1,16 +1,16 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { RegisterUser } from '../register-user';
+import { RegisterUserUseCase } from '../register-user';
 import { InMomoryUserRepository } from '@/repositories/im-momory/in-memory-user-repository';
 import { UserAlreadyExistsError } from '../errors/user-already-exists-error';
 import { compare } from 'bcryptjs';
 
 let userRepository: InMomoryUserRepository;
-let sup: RegisterUser;
+let sup: RegisterUserUseCase;
 
 describe('Teste para a criação de novos usuários.', () => {
   beforeEach(() => {
     userRepository = new InMomoryUserRepository();
-    sup = new RegisterUser(userRepository);
+    sup = new RegisterUserUseCase(userRepository);
   });
 
   test('Deve ser possível criar um novo usuário.', async () => {

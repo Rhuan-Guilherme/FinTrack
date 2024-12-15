@@ -1,7 +1,9 @@
 import fastify from 'fastify';
 import { env } from './env';
+import { UserRoutes } from 'http/controllers/users/router';
 
 const app = fastify();
+app.register(UserRoutes);
 
 app
   .listen({
