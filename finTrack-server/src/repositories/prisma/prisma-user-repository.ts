@@ -1,6 +1,6 @@
 import { Prisma, User } from '@prisma/client';
 import { UserRpositotyInterface } from '../user-repository-interface';
-import { prisma } from 'lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export class PrismaUserRepository implements UserRpositotyInterface {
   create(data: Prisma.UserCreateInput): Promise<User> {
