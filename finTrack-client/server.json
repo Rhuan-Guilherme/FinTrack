@@ -15,6 +15,70 @@
       "category": "Alimentação",
       "price": 10,
       "createdAt": "2024-12-14T13:27:50.576Z"
+    },
+    {
+      "id": "3",
+      "description": "Compra de materiais de escritório",
+      "type": "outcome",
+      "category": "Escritório",
+      "price": 150,
+      "createdAt": "2024-12-13T10:15:30.576Z"
+    },
+    {
+      "id": "4",
+      "description": "Pagamento de consultoria",
+      "type": "income",
+      "category": "Serviço",
+      "price": 5000,
+      "createdAt": "2024-12-13T08:20:45.576Z"
+    },
+    {
+      "id": "5",
+      "description": "Supermercado",
+      "type": "outcome",
+      "category": "Alimentação",
+      "price": 250,
+      "createdAt": "2024-12-12T18:40:12.576Z"
+    },
+    {
+      "id": "6",
+      "description": "Venda de curso online",
+      "type": "income",
+      "category": "Educação",
+      "price": 2000,
+      "createdAt": "2024-12-11T14:00:00.576Z"
+    },
+    {
+      "id": "7",
+      "description": "Assinatura de software",
+      "type": "outcome",
+      "category": "Tecnologia",
+      "price": 300,
+      "createdAt": "2024-12-10T16:45:20.576Z"
+    },
+    {
+      "id": "8",
+      "description": "Manutenção de servidor",
+      "type": "outcome",
+      "category": "Tecnologia",
+      "price": 1200,
+      "createdAt": "2024-12-09T09:30:50.576Z"
+    },
+    {
+      "id": "9",
+      "description": "Venda de pacote de marketing",
+      "type": "income",
+      "category": "Marketing",
+      "price": 8000,
+      "createdAt": "2024-12-08T11:15:10.576Z"
+    },
+    {
+      "id": "10",
+      "description": "Doação para caridade",
+      "type": "outcome",
+      "category": "Doação",
+      "price": 500,
+      "createdAt": "2024-12-07T12:50:40.576Z"
     }
   ]
 }
