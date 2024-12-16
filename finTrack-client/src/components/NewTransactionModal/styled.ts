@@ -83,7 +83,7 @@ export const TransactionType = styled(RadioGroup.Root)`
 `;
 
 interface TransactionTypeButtonProps {
-  variant: 'income' | 'outcomer';
+  variant: 'income' | 'outcome';
 }
 
 export const TransactionTypeButton = styled(
