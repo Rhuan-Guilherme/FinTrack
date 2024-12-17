@@ -20,20 +20,16 @@ export const UserContext = createContext({} as UserProviderType);
 export function UserProvider({ children }: UserProviderProps) {
   const [token, setToken] = useState<GetTokenSchema | null>(null);
 
-  const fetchUsersGetToken = useCallback(
-    async (data: GetTokenSchema) => {
-      const { email, password } = data;
+  const fetchUsersGetToken = useCallback(async (data: GetTokenSchema) => {
+    const { email, password } = data;
 
-      const reponse = await api.post('/user/session', {
-        email,
-        password,
-      });
+    const response = await api.post('/user/session', {
+      email,
+      password,
+    });
 
-      setToken(reponse.data.token);
-      console.log(token);
-    },
-    [token]
-  );
+    setToken(response.data.token);
+  }, []);
 
   return (
     <UserContext.Provider value={{ fetchUsersGetToken }}>
