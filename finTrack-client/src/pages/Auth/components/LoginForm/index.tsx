@@ -2,6 +2,8 @@ import { useForm } from 'react-hook-form';
 import { ButtonLogin, FormConteainer } from './styled';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { UserContext } from '../../../../Contexts/UserContext';
+import { useContext } from 'react';
 
 interface FormProps {
   email: string;
@@ -14,6 +16,8 @@ const FormLoginSchema = z.object({
 });
 
 export function LoginForm() {
+  const { fetchUsersGetToken } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -23,10 +27,10 @@ export function LoginForm() {
     resolver: zodResolver(FormLoginSchema),
   });
 
-  function handleSubmitLogin(data: FormProps) {
+  async function handleSubmitLogin(data: FormProps) {
     const { email, password } = data;
 
-    console.log(email, password);
+    await fetchUsersGetToken({ email, password });
 
     reset();
   }
