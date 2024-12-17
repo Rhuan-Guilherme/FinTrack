@@ -1,3 +1,4 @@
+import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-errors';
 import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error';
 import { makeAuthenticateUser } from '@/use-cases/factoryes/authenticate';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -22,8 +23,12 @@ export async function authenticateUser(
 
     return reply.status(201).send({ token: token });
   } catch (error) {
-    if (error instanceof UserAlreadyExistsError) {
-      reply.status(409).send({ message: error.message });
+    if (error instanceof InvalidCredentialsError) {
+      return reply.status(409).send({ message: error.message });
     }
+
+    return reply.status(500).send({
+      message: 'Erro ao processar a solicitação. Tente novamente mais tarde.',
+    });
   }
 }
