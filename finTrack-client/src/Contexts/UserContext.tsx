@@ -18,28 +18,29 @@ interface UserProviderProps {
 }
 
 interface UserProviderType {
-  fetchUsersGetToken: (data: GetTokenSchema) => Promise<void>;
+  fetchUsersGetToken: (data: GetTokenSchema) => Promise<boolean>;
   fetchCreateUser: (data: CreateUserSchema) => Promise<void>;
   fetchError?: AxiosError;
+  token?: string;
+  loged?: boolean;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const UserContext = createContext({} as UserProviderType);
 
 export function UserProvider({ children }: UserProviderProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [token, setToken] = useState<GetTokenSchema | null>(null);
+  const [loged, setLoged] = useState<boolean>(false);
+  const [token, setToken] = useState<string>('');
   const [fetchError, setFetchError] = useState<AxiosError | undefined>();
 
-  const fetchUsersGetToken = useCallback(async (data: GetTokenSchema) => {
-    const { email, password } = data;
-
+  const fetchDataUser = useCallback(async (token: string) => {
     try {
-      const response = await api.post('/user/session', {
-        email,
-        password,
+      const response = await api.get('/user', {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setToken(response.data.token);
+      console.log(response.data);
+      setLoged(true);
+      setToken(token);
     } catch (error) {
       if (isAxiosError(error)) {
         setFetchError(error as AxiosError);
@@ -48,6 +49,30 @@ export function UserProvider({ children }: UserProviderProps) {
       }
     }
   }, []);
+
+  const fetchUsersGetToken = useCallback(
+    async (data: GetTokenSchema) => {
+      const { email, password } = data;
+
+      try {
+        const response = await api.post('/user/session', {
+          email,
+          password,
+        });
+        const token = response.data.token;
+        fetchDataUser(token);
+        return true;
+      } catch (error) {
+        if (isAxiosError(error)) {
+          setFetchError(error as AxiosError);
+        } else {
+          console.log(error);
+        }
+        return false;
+      }
+    },
+    [fetchDataUser]
+  );
 
   const fetchCreateUser = useCallback(async (data: CreateUserSchema) => {
     const { email, password, name } = data;
@@ -69,7 +94,7 @@ export function UserProvider({ children }: UserProviderProps) {
 
   return (
     <UserContext.Provider
-      value={{ fetchUsersGetToken, fetchCreateUser, fetchError }}
+      value={{ fetchUsersGetToken, fetchCreateUser, fetchError, token, loged }}
     >
       {children}
     </UserContext.Provider>

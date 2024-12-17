@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UserContext } from '../../../../Contexts/UserContext';
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 interface FormProps {
   email: string;
@@ -22,6 +22,7 @@ const FormLoginSchema = z.object({
 });
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const { fetchUsersGetToken, fetchError } = useContext(UserContext);
 
   const {
@@ -36,7 +37,11 @@ export function LoginForm() {
   async function handleSubmitLogin(data: FormProps) {
     const { email, password } = data;
 
-    await fetchUsersGetToken({ email, password });
+    const fetch = await fetchUsersGetToken({ email, password });
+
+    if (fetch) {
+      navigate('/');
+    }
 
     reset();
   }
