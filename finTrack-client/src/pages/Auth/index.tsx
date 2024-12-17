@@ -4,6 +4,9 @@ import { AuthContainer, AuthDivider, AuthForm } from './styled';
 export function Auth() {
   return (
     <AuthContainer>
+      <AuthForm>
+        <LoginForm />
+      </AuthForm>
       <AuthDivider>
         <div>
           <img src="./logo.svg" />
@@ -14,9 +17,6 @@ export function Auth() {
           </p>
         </div>
       </AuthDivider>
-      <AuthForm>
-        <LoginForm />
-      </AuthForm>
     </AuthContainer>
   );
 }

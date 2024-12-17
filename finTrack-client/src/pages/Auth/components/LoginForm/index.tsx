@@ -1,9 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { ButtonLogin, FormConteainer } from './styled';
+import {
+  ButtonLogin,
+  FormConteainer,
+  InfoView,
+  LoginFormContainer,
+} from './styled';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UserContext } from '../../../../Contexts/UserContext';
 import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface FormProps {
   email: string;
@@ -36,19 +42,31 @@ export function LoginForm() {
   }
 
   return (
-    <FormConteainer onSubmit={handleSubmit(handleSubmitLogin)}>
-      <div>
-        <label htmlFor="">E-mail</label>
-        <input type="text" {...register('email')} />
-      </div>
-      <div>
-        <label htmlFor="">Senha </label>
-        <input type="text" {...register('password')} />
-        {errors && <p>{errors.email?.message}</p>}
-      </div>
-      <ButtonLogin type="submit" disabled={isSubmitting}>
-        ENTRAR
-      </ButtonLogin>
-    </FormConteainer>
+    <LoginFormContainer>
+      <InfoView>
+        <h1>
+          Entre em <br />
+          sua conta
+        </h1>
+        <p>
+          Ainda não tem cadastro? <NavLink to="/create">Cadaste-se</NavLink>
+        </p>
+      </InfoView>
+
+      <FormConteainer onSubmit={handleSubmit(handleSubmitLogin)}>
+        <div>
+          <label htmlFor="">E-mail</label>
+          <input type="text" {...register('email')} />
+        </div>
+        <div>
+          <label htmlFor="">Senha </label>
+          <input type="text" {...register('password')} />
+          {errors && <p>{errors.email?.message}</p>}
+        </div>
+        <ButtonLogin type="submit" disabled={isSubmitting}>
+          ENTRAR
+        </ButtonLogin>
+      </FormConteainer>
+    </LoginFormContainer>
   );
 }
