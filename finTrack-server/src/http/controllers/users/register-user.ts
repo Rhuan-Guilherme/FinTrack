@@ -27,5 +27,9 @@ export async function registerUser(
         .status(409)
         .send({ message: 'Já exisite um cadastro com esse e-mail.' });
     }
+
+    return reply.status(500).send({
+      message: 'Erro ao processar a solicitação. Tente novamente mais tarde.',
+    });
   }
 }
