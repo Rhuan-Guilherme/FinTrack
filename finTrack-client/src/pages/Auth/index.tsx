@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { LoginForm } from './components/LoginForm';
 import { AuthContainer, AuthDivider, AuthForm } from './styled';
 import logo from '../../assets/logo.svg';
+import { RegiserForm } from './components/RegisterForm';
 
 export function Auth() {
   return (
@@ -9,7 +10,7 @@ export function Auth() {
       <AuthForm>
         <Routes>
           <Route path="/" element={<LoginForm />} />
-          <Route path="/create" element={<div>Cadastro</div>} />
+          <Route path="/create" element={<RegiserForm />} />
         </Routes>
       </AuthForm>
       <AuthDivider>
