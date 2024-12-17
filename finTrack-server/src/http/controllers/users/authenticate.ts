@@ -19,7 +19,7 @@ export async function authenticateUser(
     const registerUser = makeAuthenticateUser();
     const { user } = await registerUser.execute({ email, password });
 
-    const token = await reply.jwtSign({ id: user.id }, { sub: user.email });
+    const token = await reply.jwtSign({}, { sub: user.id });
 
     return reply.status(201).send({ token: token });
   } catch (error) {

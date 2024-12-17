@@ -1,19 +1,19 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { InMomoryUserRepository } from '@/repositories/im-memory/in-memory-user-repository';
+import { AuthenticateUseCase } from '../authenticate';
 import { InvalidCredentialsError } from '../errors/invalid-credentials-errors';
 import { hash } from 'bcryptjs';
-import { GetUseerUseCase } from '../get-user';
 
 let userRepository: InMomoryUserRepository;
-let sup: GetUseerUseCase;
+let sup: AuthenticateUseCase;
 
 describe('Teste para obter daddos do usuário.', () => {
   beforeEach(() => {
     userRepository = new InMomoryUserRepository();
-    sup = new GetUseerUseCase(userRepository);
+    sup = new AuthenticateUseCase(userRepository);
   });
 
-  test('Deve ser possível obter os dados de um usuário.', async () => {
+  test('Deve ser possível autenticar um usuário.', async () => {
     const newUser = await userRepository.create({
       name: 'Teste',
       email: 'teste@teste.com',
@@ -21,7 +21,8 @@ describe('Teste para obter daddos do usuário.', () => {
     });
 
     const { user } = await sup.execute({
-      id: newUser.id,
+      email: 'teste@teste.com',
+      password: 'teste123',
     });
 
     expect(user.id).to.equal(newUser.id);
@@ -29,10 +30,11 @@ describe('Teste para obter daddos do usuário.', () => {
     expect(user.email).to.equal('teste@teste.com');
   });
 
-  test('Não deve ser possível resgatar dados de um usuário com senha ou e-mail errados.', async () => {
+  test('Não deve ser possível autenticar um usuário com senha ou e-mail errados.', async () => {
     expect(() =>
       sup.execute({
-        id: 'not-id',
+        email: 'teste@teste.com',
+        password: 'teste123',
       })
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
