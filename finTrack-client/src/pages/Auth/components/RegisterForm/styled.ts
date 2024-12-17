@@ -92,6 +92,13 @@ export const FormConteainer = styled.form`
   p {
     font-family: 'Roboto Mono', sans-serif;
     color: ${(prosp) => prosp.theme['red-300']};
+
+    a {
+      margin-left: 10px;
+      color: ${(prosp) => prosp.theme.white};
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
   }
 `;
 

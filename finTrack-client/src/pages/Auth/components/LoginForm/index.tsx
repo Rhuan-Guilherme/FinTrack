@@ -22,7 +22,7 @@ const FormLoginSchema = z.object({
 });
 
 export function LoginForm() {
-  const { fetchUsersGetToken } = useContext(UserContext);
+  const { fetchUsersGetToken, fetchError } = useContext(UserContext);
 
   const {
     register,
@@ -58,11 +58,16 @@ export function LoginForm() {
         <div>
           <label htmlFor="">E-mail</label>
           <input type="text" {...register('email')} />
+          {errors && <p>{errors.email?.message}</p>}
         </div>
         <div>
           <label htmlFor="">Senha </label>
           <input type="text" {...register('password')} />
-          {errors && <p>{errors.email?.message}</p>}
+          {fetchError && fetchError.status === 409 ? (
+            <p>Usuário ou senha inválidos.</p>
+          ) : (
+            ''
+          )}
         </div>
         <ButtonLogin type="submit" disabled={isSubmitting}>
           ENTRAR

@@ -24,7 +24,7 @@ const FormLoginSchema = z.object({
 });
 
 export function RegiserForm() {
-  const { fetchCreateUser } = useContext(UserContext);
+  const { fetchCreateUser, fetchError } = useContext(UserContext);
 
   const {
     register,
@@ -63,11 +63,18 @@ export function RegiserForm() {
         <div>
           <label htmlFor="">E-mail</label>
           <input type="text" {...register('email')} />
+          {errors && <p>{errors.email?.message}</p>}
         </div>
         <div>
           <label htmlFor="">Senha </label>
           <input type="text" {...register('password')} />
-          {errors && <p>{errors.email?.message}</p>}
+          {fetchError && fetchError.status === 409 ? (
+            <p>
+              E-mail ja cadastrado.<NavLink to="/user">Login?</NavLink>
+            </p>
+          ) : (
+            ''
+          )}
         </div>
         <ButtonRegister type="submit" disabled={isSubmitting}>
           CRIAR

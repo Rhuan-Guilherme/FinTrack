@@ -53,12 +53,11 @@ export function UserProvider({ children }: UserProviderProps) {
     const { email, password, name } = data;
 
     try {
-      const response = await api.post('/user/create', {
+      await api.post('/user/create', {
         name,
         email,
         password,
       });
-      console.log(response);
     } catch (error) {
       if (isAxiosError(error)) {
         setFetchError(error as AxiosError);
