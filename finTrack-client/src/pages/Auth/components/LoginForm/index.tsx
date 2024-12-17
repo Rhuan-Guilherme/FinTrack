@@ -49,7 +49,8 @@ export function LoginForm() {
           sua conta
         </h1>
         <p>
-          Ainda não tem cadastro? <NavLink to="/create">Cadaste-se</NavLink>
+          Ainda não tem cadastro?{' '}
+          <NavLink to="/user/create">Cadaste-se</NavLink>
         </p>
       </InfoView>
 

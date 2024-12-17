@@ -1,15 +1,20 @@
+import { Route, Routes } from 'react-router-dom';
 import { LoginForm } from './components/LoginForm';
 import { AuthContainer, AuthDivider, AuthForm } from './styled';
+import logo from '../../assets/logo.svg';
 
 export function Auth() {
   return (
     <AuthContainer>
       <AuthForm>
-        <LoginForm />
+        <Routes>
+          <Route path="/" element={<LoginForm />} />
+          <Route path="/create" element={<div>Cadastro</div>} />
+        </Routes>
       </AuthForm>
       <AuthDivider>
         <div>
-          <img src="./logo.svg" />
+          <img src={logo} />
           <p>
             Transformando a maneira como você gerencia suas finanças. Organize
             suas receitas, controle seus gastos e alcance seus objetivos com

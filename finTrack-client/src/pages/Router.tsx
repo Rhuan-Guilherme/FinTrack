@@ -6,7 +6,7 @@ export function Router() {
   return (
     <Routes>
       <Route path="/" element={<Trasnsaction />} />
-      <Route path="/user" element={<Auth />} />
+      <Route path="/user/*" element={<Auth />} />
     </Routes>
   );
 }
