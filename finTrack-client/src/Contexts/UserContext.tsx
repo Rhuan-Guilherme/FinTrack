@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useCallback, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { api } from '../lib/axios';
 import { AxiosError, isAxiosError } from 'axios';
 
@@ -17,12 +23,19 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
 interface UserProviderType {
   fetchUsersGetToken: (data: GetTokenSchema) => Promise<boolean>;
   fetchCreateUser: (data: CreateUserSchema) => Promise<void>;
   fetchError?: AxiosError;
   token?: string;
   loged?: boolean;
+  data: User | null;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -31,16 +44,20 @@ export const UserContext = createContext({} as UserProviderType);
 export function UserProvider({ children }: UserProviderProps) {
   const [loged, setLoged] = useState<boolean>(false);
   const [token, setToken] = useState<string>('');
-  const [fetchError, setFetchError] = useState<AxiosError | undefined>();
+  const [data, setData] = useState<User | null>(null);
+  const [fetchError, setFetchError] = useState<AxiosError | undefined>(
+    undefined
+  );
 
   const fetchDataUser = useCallback(async (token: string) => {
     try {
       const response = await api.get('/user', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response.data);
+      localStorage.setItem('@fintrack/token', token);
       setLoged(true);
       setToken(token);
+      setData(response.data);
     } catch (error) {
       if (isAxiosError(error)) {
         setFetchError(error as AxiosError);
@@ -92,9 +109,25 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem('@fintrack/token');
+    if (token) {
+      fetchDataUser(token);
+    } else {
+      setLoged(false);
+    }
+  }, [fetchDataUser]);
+
   return (
     <UserContext.Provider
-      value={{ fetchUsersGetToken, fetchCreateUser, fetchError, token, loged }}
+      value={{
+        fetchUsersGetToken,
+        fetchCreateUser,
+        fetchError,
+        token,
+        loged,
+        data,
+      }}
     >
       {children}
     </UserContext.Provider>
