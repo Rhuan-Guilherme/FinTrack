@@ -27,6 +27,7 @@ interface UserProviderType {
 export const UserContext = createContext({} as UserProviderType);
 
 export function UserProvider({ children }: UserProviderProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [token, setToken] = useState<GetTokenSchema | null>(null);
   const [fetchError, setFetchError] = useState<AxiosError | undefined>();
 
@@ -39,12 +40,11 @@ export function UserProvider({ children }: UserProviderProps) {
         password,
       });
       setToken(response.data.token);
-      console.log(token);
     } catch (error) {
       if (isAxiosError(error)) {
         setFetchError(error as AxiosError);
       } else {
-        console.error('Unexpected error:', error);
+        console.log(error);
       }
     }
   }, []);
@@ -53,16 +53,17 @@ export function UserProvider({ children }: UserProviderProps) {
     const { email, password, name } = data;
 
     try {
-      await api.post('/user/create', {
+      const response = await api.post('/user/create', {
         name,
         email,
         password,
       });
+      console.log(response);
     } catch (error) {
       if (isAxiosError(error)) {
         setFetchError(error as AxiosError);
       } else {
-        console.error('Unexpected error:', error);
+        console.log(error);
       }
     }
   }, []);

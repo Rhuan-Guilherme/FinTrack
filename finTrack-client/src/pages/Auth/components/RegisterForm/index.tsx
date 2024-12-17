@@ -18,12 +18,13 @@ interface FormProps {
 }
 
 const FormLoginSchema = z.object({
+  name: z.string(),
   email: z.string().email('Insira um e-mail válido.'),
   password: z.string(),
 });
 
 export function RegiserForm() {
-  // const {  } = useContext(UserContext);
+  const { fetchCreateUser } = useContext(UserContext);
 
   const {
     register,
@@ -35,9 +36,9 @@ export function RegiserForm() {
   });
 
   async function handleSubmitLogin(data: FormProps) {
-    const { email, password } = data;
+    const { name, email, password } = data;
 
-    await fetchUsersGetToken({ email, password });
+    await fetchCreateUser({ name, email, password });
 
     reset();
   }
