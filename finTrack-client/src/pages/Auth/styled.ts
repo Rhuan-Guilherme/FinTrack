@@ -5,6 +5,10 @@ export const AuthContainer = styled.div`
   height: 100vh;
   padding: 1rem;
   grid-template-columns: repeat(2, 1fr);
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const AuthForm = styled.div`
@@ -40,5 +44,9 @@ export const AuthDivider = styled.form`
     color: ${(prosp) => prosp.theme['gray-300']};
     text-align: center;
     line-height: 1.5;
+  }
+
+  @media (max-width: 1200px) {
+    display: none;
   }
 `;

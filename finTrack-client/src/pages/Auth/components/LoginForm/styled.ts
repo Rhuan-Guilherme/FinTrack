@@ -6,6 +6,12 @@ export const LoginFormContainer = styled.div`
   flex-direction: column;
   gap: 2rem;
   width: 400px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    padding: 0;
+    gap: 0;
+  }
 `;
 
 export const InfoView = styled.section`
@@ -25,12 +31,12 @@ export const InfoView = styled.section`
       content: '';
       display: block;
       position: absolute;
-      top: 32px;
-      transform: rotate(120deg);
-      left: 4px;
+      top: 41px;
+      left: -12px;
+      transform: rotate(90deg);
       z-index: -1;
       height: 4px;
-      width: 35px;
+      width: 40px;
       background-color: ${(prosp) => prosp.theme['purple-500']};
     }
 
@@ -38,12 +44,12 @@ export const InfoView = styled.section`
       content: '';
       display: block;
       position: absolute;
-      top: 36px;
-      left: -2px;
-      transform: rotate(120deg);
+      top: 41px;
+      left: -5px;
+      transform: rotate(90deg);
       z-index: -1;
       height: 4px;
-      width: 35px;
+      width: 40px;
       background-color: ${(prosp) => prosp.theme['purple-300']};
     }
   }
