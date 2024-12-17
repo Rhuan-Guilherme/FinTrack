@@ -1,17 +1,20 @@
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './styles/theme/default';
 import { GlobalStyles } from './styles/global';
-import { Trasnsaction } from './pages/Transactions';
 import { TransactionProvider } from './Contexts/TransactionsContext';
+import { BrowserRouter } from 'react-router-dom';
+import { Router } from './pages/Router';
 
 export function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <TransactionProvider>
-        <Trasnsaction />
-      </TransactionProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <TransactionProvider>
+          <Router />
+        </TransactionProvider>
 
-      <GlobalStyles />
-    </ThemeProvider>
+        <GlobalStyles />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
