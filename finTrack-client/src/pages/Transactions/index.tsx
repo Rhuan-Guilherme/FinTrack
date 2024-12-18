@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Header } from '../../components/Header';
 import { Summary } from '../../components/Summary';
 import { SearchForm } from './components/SearchForm';
@@ -9,9 +9,20 @@ import {
 } from './styled';
 import { TransactionsContext } from '../../Contexts/TransactionsContext';
 import { dateFormatter, priceFormater } from '../../utils/Formater';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../Contexts/UserContext';
 
 export function Trasnsaction() {
   const { transactions } = useContext(TransactionsContext);
+
+  const navigate = useNavigate();
+  const { loged } = useContext(UserContext);
+
+  useEffect(() => {
+    if (!loged) {
+      navigate('/user');
+    }
+  }, [loged, navigate]);
 
   return (
     <div>

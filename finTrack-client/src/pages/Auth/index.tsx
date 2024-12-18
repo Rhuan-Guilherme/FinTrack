@@ -1,10 +1,18 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LoginForm } from './components/LoginForm';
 import { AuthContainer, AuthDivider, AuthForm } from './styled';
 import logo from '../../assets/logo.svg';
 import { RegiserForm } from './components/RegisterForm';
+import { useContext } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 
 export function Auth() {
+  const navigate = useNavigate();
+  const { loged } = useContext(UserContext);
+
+  if (loged) {
+    navigate('/');
+  }
   return (
     <AuthContainer>
       <AuthForm>

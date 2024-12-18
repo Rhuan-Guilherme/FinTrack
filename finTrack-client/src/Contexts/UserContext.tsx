@@ -64,6 +64,9 @@ export function UserProvider({ children }: UserProviderProps) {
       } else {
         console.log(error);
       }
+      setLoged(false);
+      setData(null);
+      setToken('');
     }
   }, []);
 
@@ -85,6 +88,9 @@ export function UserProvider({ children }: UserProviderProps) {
         } else {
           console.log(error);
         }
+        setLoged(false);
+        setData(null);
+        setToken('');
         return false;
       }
     },
@@ -115,6 +121,8 @@ export function UserProvider({ children }: UserProviderProps) {
       fetchDataUser(token);
     } else {
       setLoged(false);
+      setData(null);
+      setToken('');
     }
   }, [fetchDataUser]);
 
