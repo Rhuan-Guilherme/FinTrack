@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String        @id @default(uuid())
   name          String
-  email         String   @unique
+  email         String        @unique
   password_hash String
-  created_at    DateTime @default(now())
+  created_at    DateTime      @default(now())
+  Transaction   Transaction[]
 
   @@map("users")
 }
@@ -29,6 +30,8 @@ model Transaction {
   type        TypeTransaction
   price       Decimal
   created_at  DateTime        @default(now())
+  user        User            @relation(fields: [userId], references: [id])
+  userId      String
 
   @@map("transactions")
 }
