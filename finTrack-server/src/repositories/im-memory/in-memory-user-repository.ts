@@ -10,6 +10,7 @@ export class InMomoryUserRepository implements UserRpositotyInterface {
       name: data.name,
       email: data.email,
       password_hash: data.password_hash,
+      created_at: new Date(),
     };
 
     this.user.push(newUser);
