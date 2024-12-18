@@ -32,6 +32,7 @@ interface User {
 interface UserProviderType {
   fetchUsersGetToken: (data: GetTokenSchema) => Promise<boolean>;
   fetchCreateUser: (data: CreateUserSchema) => Promise<void>;
+  singout: () => void;
   fetchError?: AxiosError;
   token?: string;
   loged?: boolean;
@@ -126,6 +127,13 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }, [fetchDataUser]);
 
+  const singout = useCallback(async () => {
+    localStorage.removeItem('@fintrack/token');
+    setLoged(false);
+    setData(null);
+    setToken('');
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
@@ -135,6 +143,7 @@ export function UserProvider({ children }: UserProviderProps) {
         token,
         loged,
         data,
+        singout,
       }}
     >
       {children}
