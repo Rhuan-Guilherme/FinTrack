@@ -10,17 +10,17 @@ import { api } from '../lib/axios';
 interface Transaction {
   id: number;
   description: string;
-  type: 'income' | 'outcome';
+  type: 'INCOME' | 'OUTCOME';
   category: string;
   price: number;
-  createdAt: string;
+  created_at: string;
 }
 
 interface CreateTransactionProps {
   description: string;
   category: string;
   price: number;
-  type: 'income' | 'outcome';
+  type: 'INCOME' | 'OUTCOME';
 }
 
 interface TransactionsContextType {
@@ -40,14 +40,11 @@ export function TransactionProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const fetchTransactions = useCallback(async (query?: string) => {
-    const response = await api.get('/transactions', {
-      params: {
-        _sort: 'createdAt',
-        _order: 'desc',
-        q: query,
-      },
+    const token = window.localStorage.getItem('@fintrack/token');
+    const response = await api.get('/transactions/1', {
+      headers: { Authorization: 'Bearer ' + token },
     });
-    setTransactions(response.data);
+    setTransactions(response.data.transactions);
   }, []);
 
   const createTransaction = useCallback(

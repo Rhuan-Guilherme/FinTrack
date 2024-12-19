@@ -67,7 +67,7 @@ export function RegiserForm() {
         </div>
         <div>
           <label htmlFor="">Senha </label>
-          <input type="text" {...register('password')} />
+          <input type="password" {...register('password')} />
           {fetchError && fetchError.status === 409 ? (
             <p>
               E-mail ja cadastrado.<NavLink to="/user">Login?</NavLink>

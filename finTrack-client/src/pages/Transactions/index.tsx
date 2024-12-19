@@ -35,16 +35,18 @@ export function Trasnsaction() {
         <TransactionsTable>
           <tbody>
             {transactions.map((transaction) => (
-              <tr>
+              <tr key={transaction.id}>
                 <td width="50%">{transaction.description}</td>
                 <td>
                   <PriceHighlight variant={transaction.type}>
-                    {transaction.type === 'outcome' && '- '}
-                    {priceFormater.format(transaction.price)}
+                    {transaction.type === 'OUTCOME' && '- '}
+                    {priceFormater.format(Number(transaction.price))}
                   </PriceHighlight>
                 </td>
                 <td>{transaction.category}</td>
-                <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+                <td>
+                  {dateFormatter.format(new Date(transaction.created_at))}
+                </td>
               </tr>
             ))}
           </tbody>
