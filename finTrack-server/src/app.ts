@@ -3,6 +3,7 @@ import { env } from './env';
 import { UserRoutes } from '@/http/controllers/users/router';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCors from '@fastify/cors';
+import { TransactionsRoutes } from './http/controllers/transactions/router';
 
 export const app = fastify();
 
@@ -16,3 +17,4 @@ app.register(fastifyCors, {
 app.register(fastifyJwt, { secret: env.JWT_SECRET });
 
 app.register(UserRoutes);
+app.register(TransactionsRoutes);

@@ -1,8 +1,10 @@
 import { TransactionRepositoryInterface } from '@/repositories/transactions-repository-interface';
 import { Transaction } from '@prisma/client';
+import { TransactionsNotFoundError } from './errors/transactions-not-found-error';
 
 interface GetTransactionRequest {
   userId: string;
+  page?: number;
 }
 
 interface GetTransactionResponse {
@@ -14,10 +16,16 @@ export class GetTransactionUseCase {
 
   async execute({
     userId,
+    page = 1,
   }: GetTransactionRequest): Promise<GetTransactionResponse> {
     const transactions = await this.transactionRepository.findAllTransactions(
-      userId
+      userId,
+      page
     );
+
+    if (!transactions) {
+      throw new TransactionsNotFoundError();
+    }
 
     return {
       transactions,
