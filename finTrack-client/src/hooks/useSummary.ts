@@ -8,11 +8,11 @@ export function useSummary() {
     return transactions.reduce(
       (acc, transaction) => {
         if (transaction.type === 'INCOME') {
-          acc.income += transaction.price;
-          acc.total += transaction.price;
+          acc.income += Number(transaction.price);
+          acc.total += Number(transaction.price);
         } else {
-          acc.outcome += transaction.price;
-          acc.total -= transaction.price;
+          acc.outcome += Number(transaction.price);
+          acc.total -= Number(transaction.price);
         }
 
         return acc;

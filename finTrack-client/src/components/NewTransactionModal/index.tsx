@@ -17,7 +17,7 @@ const NewTransactionSchema = z.object({
   description: z.string(),
   price: z.number(),
   category: z.string(),
-  type: z.enum(['income', 'outcome']),
+  type: z.enum(['INCOME', 'OUTCOME']),
 });
 
 type NewTransactionFormType = z.infer<typeof NewTransactionSchema>;
@@ -81,11 +81,11 @@ export function NewTransactionModal() {
                   onValueChange={field.onChange}
                   value={field.value}
                 >
-                  <TransactionTypeButton variant="income" value="income">
+                  <TransactionTypeButton variant="income" value="INCOME">
                     <ArrowCircleUp size={24} />
                     Entrada
                   </TransactionTypeButton>
-                  <TransactionTypeButton variant="outcome" value="outcome">
+                  <TransactionTypeButton variant="outcome" value="OUTCOME">
                     <ArrowCircleDown size={24} />
                     Saída
                   </TransactionTypeButton>

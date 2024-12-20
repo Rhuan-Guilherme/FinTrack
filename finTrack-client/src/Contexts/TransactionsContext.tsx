@@ -8,11 +8,11 @@ import {
 import { api } from '../lib/axios';
 
 interface Transaction {
-  id: number;
+  id: string;
   description: string;
   type: 'INCOME' | 'OUTCOME';
   category: string;
-  price: number;
+  price: string;
   created_at: string;
 }
 
@@ -52,18 +52,26 @@ export function TransactionProvider({ children }: TransactionsProviderProps) {
 
   const createTransaction = useCallback(
     async (data: CreateTransactionProps) => {
+      const token = window.localStorage.getItem('@fintrack/token');
+      console.log(token);
+
       const { category, description, price, type } = data;
 
-      const response = await api.post('/transactions', {
-        category,
-        description,
-        price,
-        type,
-        createdAt: new Date().toISOString(),
-      });
-      console.log(response);
+      const response = await api.post(
+        '/transactions/create',
+        {
+          category,
+          description,
+          price,
+          type,
+        },
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        }
+      );
 
-      setTransactions((state) => [response.data, ...state]);
+      setTransactions((state) => [response.data.transaction, ...state]);
+      console.log(transactions);
     },
     []
   );
