@@ -21,7 +21,7 @@ export async function createTransaction(
 
   try {
     const createTransaction = makeCreateTransactions();
-    await createTransaction.execute({
+    const { transaction } = await createTransaction.execute({
       category,
       description,
       price,
@@ -31,7 +31,7 @@ export async function createTransaction(
 
     return reply
       .status(201)
-      .send({ message: 'Transaction created successfully' });
+      .send({ message: 'Transaction created successfully', transaction });
   } catch (error) {
     if (error instanceof TransactionsNotFoundError) {
       return reply.status(401).send({ message: error.message });
