@@ -25,7 +25,7 @@ interface CreateTransactionProps {
 
 interface TransactionsContextType {
   transactions: Transaction[];
-  fetchTransactions: (query?: string) => Promise<void>;
+  fetchTransactions: (query?: string | undefined) => Promise<void>;
   createTransaction: (data: CreateTransactionProps) => Promise<void>;
 }
 
@@ -39,11 +39,14 @@ interface TransactionsProviderProps {
 export function TransactionProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const fetchTransactions = useCallback(async (query?: string) => {
+  const fetchTransactions = useCallback(async (query?: string | undefined) => {
     const token = window.localStorage.getItem('@fintrack/token');
-    const response = await api.get('/transactions/1', {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+    const response = await api.get(
+      `/transactions/1?query=${query ? query : ''}`,
+      {
+        headers: { Authorization: 'Bearer ' + token },
+      }
+    );
     setTransactions(response.data.transactions);
   }, []);
 
