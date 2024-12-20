@@ -10,10 +10,11 @@ export class PrismaTransactionRepository
 
     return transaction;
   }
-  async findAllTransactions(userId: string, page: number) {
+  async findAllTransactions(userId: string, page: number, query?: string) {
     const transactions = await prisma.transaction.findMany({
       where: {
         userId,
+        ...(query && { description: { contains: query, mode: 'insensitive' } }),
       },
       take: 20,
       skip: (page - 1) * 20,

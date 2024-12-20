@@ -11,13 +11,18 @@ export async function getTransactions(
     page: z.coerce.number(),
   });
 
-  const { page } = pageSchema.parse(request.params);
+  const querySchema = z.object({
+    query: z.string().or(z.undefined()),
+  });
 
+  const { page } = pageSchema.parse(request.params);
+  const { query } = querySchema.parse(request.query);
   try {
     const getTransactions = makeGetTransactions();
     const { transactions } = await getTransactions.execute({
       userId: request.user.sub,
       page,
+      query,
     });
 
     return reply.status(200).send({ transactions });

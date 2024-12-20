@@ -5,6 +5,7 @@ import { TransactionsNotFoundError } from './errors/transactions-not-found-error
 interface GetTransactionRequest {
   userId: string;
   page?: number;
+  query?: string | number | undefined;
 }
 
 interface GetTransactionResponse {
@@ -17,10 +18,12 @@ export class GetTransactionUseCase {
   async execute({
     userId,
     page = 1,
+    query,
   }: GetTransactionRequest): Promise<GetTransactionResponse> {
     const transactions = await this.transactionRepository.findAllTransactions(
       userId,
-      page
+      page,
+      query
     );
 
     if (!transactions) {
